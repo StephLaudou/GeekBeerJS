@@ -1,0 +1,19 @@
+{
+  "name": "geekbeerjs",
+  "version": "1.0.0",
+  "description": "FindAndSaveBeers",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StephLaudou/GeekBeerJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StephLaudou/GeekBeerJS/issues"
+  },
+  "homepage": "https://github.com/StephLaudou/GeekBeerJS#readme"
+}
