@@ -1,4 +1,8 @@
-    [
+{
+    "currentPage": 1,
+    "numberOfPages": 23,
+    "totalResults": 1109,
+    "data": [
         {
             "id": "c4f2KE",
             "name": "'Murican Pilsner",
@@ -8483,4 +8487,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "status": "success"
+}
