@@ -14,24 +14,34 @@ MongoClient.connect(url, function(error, databases) {
 	beersDb = databases.db("beers");
   
   	//TEST
-  	//beersDb.collection("data").find({"name" : "11.5° PLATO"}).toArray(function(err,result){
-  		//console.log(result)
-  	//})
+  	/*beersDb.collection("data").find({"name" : "11.5° PLATO"}).toArray(function(err,result){
+  		console.log(result)
+  		console.log(err)
+  	})*/
+  	/*var cursor = beersDb.collection("data").find({"name" : "11.5° PLATO"},{"name":1}) //PROJECTION NE MARCHE PAS
+  	cursor.each(function(err, doc) {
 
+        console.log(doc);
+
+    });*/
 
 });
 
 
-/*app.get('/', function(req, res) {
-    res.setHeader('Content-Type', 'text/plain');
-    res.send('Vous êtes à l\'accueil');
-});*/
+
 
 app.get("/", function (req,res){	
 	res.sendFile(__dirname + "/html/index.html");
 	
 });
 
+app.get("/beers", function (req,res){	//http://localhost:8080/notes
+	//console.log("toto")
+	beersDb.collection("data").find().limit(10).toArray(function(err,result){
+		res.json(result)
+  	})
+
+});
 
 
 app.listen(8080);
@@ -39,7 +49,10 @@ app.listen(8080);
 
 
 
-
+/*app.get('/', function(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    res.send('Vous êtes à l\'accueil');
+});*/
 
 /* SANS EXPRESS
 var http = require('http');
