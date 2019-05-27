@@ -8,15 +8,27 @@ document.addEventListener("DOMContentLoaded", function() {
 		})*/
 
 
-	var popupClose = document.querySelector(".popupClose");
-	var overlay = document.querySelector(".overlay");
-	var popupTrigger = document.querySelector(".name");
+	let popupClose = document.querySelector(".popupClose");
+	popupClose.addEventListener('click',closePopup)
+	
+	/*let popupTriggers = document.querySelectorAll(".name");
 
-	popupTrigger.addEventListener('click',openPopup);
+	popupTriggers.addEventListener('click',openPopup);*/
 
+document.querySelectorAll(".name").forEach(function(trigger){
+	trigger.addEventListener('click',openPopup)
+})
+
+	
+	let overlay = document.querySelector(".overlay");
+	
 	function openPopup (){
 		overlay.style.display = 'block';
-
-
 	}
+
+	function closePopup (){
+		overlay.style.display = 'none';
+	}
+
+
 })
