@@ -1,10 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-fetch("/beers")
+/*fetch("/beers")
 		.then(response => response.json() ) //--- on ne met pas au format JSON mais on recupere une reposne http qui com,ntient plein de chose et on en ectrait la partie json //--- equiv function(response){return response.json} JE METS LA RESPONSE SANS UNE VARIBLE notes
 		.then(beers => {
 			for (let beer of beers)
 				console.log(beer.name)
-		})
+		})*/
 
+
+	var popupClose = document.querySelector(".popupClose");
+	var overlay = document.querySelector(".overlay");
+	var popupTrigger = document.querySelector(".name");
+
+	popupTrigger.addEventListener('click',openPopup);
+
+	function openPopup (){
+		overlay.style.display = 'block';
+
+
+	}
 })

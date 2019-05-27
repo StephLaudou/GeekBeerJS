@@ -1,1 +1,82 @@
+* {
+  margin: 0;
+  padding: 0; 
+}
 
+body{
+  background-color:#1e2636;
+  color:#e2b266;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+header{
+  height: 50px;
+
+}
+ h1{
+   color:#e2b266;
+   text-align: center;
+ }
+
+ .filter{
+  height: 100px;
+
+ }
+
+ /*STYLE DE LA LISTE*/
+.label {
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+ }
+
+
+
+ .item {
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
+  /*width: 120px;
+  vertical-align: middle;*/
+}
+
+
+ .element {
+   width: 120px;
+   margin: auto 0;
+   /*vertical-align: middle marche si j'utilise display inline block*/
+ }
+
+
+ /*POPUP*/
+ .overlay {
+  position: fixed;
+  left:0px;
+  top:0px;
+  background-color:rgba(0, 0, 0, 0.40); 
+  width: 100%;
+  height: 100%;
+  display: none;
+ }
+
+ 
+ .popup{
+  margin:20% auto;
+  width: 70%;
+  background-color: #e2b266;
+  color:#1e2636;
+  border-radius: 5px;
+  box-shadow: 15px 20px 0 rgba(0, 0, 0, 0.5);
+  padding: 1em;
+
+
+} 
+
+.popupdetail{
+  margin:20px;
+}
+
+.popupClose{
+  float: right;
+}
