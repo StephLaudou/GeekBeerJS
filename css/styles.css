@@ -69,14 +69,24 @@ header{
   border-radius: 5px;
   box-shadow: 15px 20px 0 rgba(0, 0, 0, 0.5);
   padding: 1em;
-
+  position: relative;
 
 } 
 
 .popupdetail{
   margin:20px;
+  display: flex;
+  
 }
 
+.popuplabel{
+  width : 150px;
+  margin:0px 10px 0px 0px;
+  font-weight: bold;
+}
 .popupClose{
-  float: right;
+  position : absolute;
+  right: 20px;
+  font-size: 3em;
+  top: 5px;
 }
