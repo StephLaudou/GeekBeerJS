@@ -31,8 +31,6 @@ header{
 
  }
 
-
-
  .item {
   display: flex;
   flex-direction: row;
@@ -41,10 +39,9 @@ header{
   vertical-align: middle;*/
 }
 
-
  .element {
-   width: 120px;
-   margin: auto 0;
+   width: 300px;
+   margin: auto 10px;
    /*vertical-align: middle marche si j'utilise display inline block*/
  }
 
