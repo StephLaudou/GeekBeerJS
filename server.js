@@ -14,10 +14,10 @@ MongoClient.connect(url, function(error, databases) {
 	beersDb = databases.db("beers");
   
 		//TESTS QUERY MONGODB
-		beersDb.collection("data").find({"labels.medium":{$exists:true}}).limit(10).toArray(function(err,result){
+		/*beersDb.collection("data").find({"labels.medium":{$exists:true}}).limit(10).toArray(function(err,result){
   		console.log(result)
   		console.log(err)
-  	})
+  	})*/
 
 
   	/*beersDb.collection("data").find({"name" : "11.5° PLATO"}).toArray(function(err,result){
@@ -42,13 +42,26 @@ app.get("/", function (req,res){
 });
 
 app.get("/beers", function (req,res){	
-	console.log("toto")
+	//console.log("beers")
 	beersDb.collection("data").find({"labels.medium":{$exists:true}}).limit(10).toArray(function(err,result){
 		res.json(result)
   	})
 
 });
 
+app.get("/BeersById", function (req,res){	
+	console.log("getBeersById")
+	if (req.query.id) {
+		console.log(req.query.id)
+		beersDb.collection("data").find({"id":req.query.id}).toArray(function(err,result){
+			res.json(result)
+			})
+	} else 
+	console.log("error")
+
+	
+
+});
 
 app.listen(8080);
 

@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					let name =  document.createElement("div");
 					name.classList.add("element");
 					name.classList.add("name");
+					name.id = beer.id;
 					name.innerHTML = beer.name;
 					item.appendChild(name);
 					//Creation de la balise Ajouter
@@ -50,15 +51,40 @@ document.addEventListener("DOMContentLoaded", function() {
 					})
 			}
 
-		function openPopup (){
-			overlay.style.display = 'block';
-		}
+
+			const getBeersById = async function(id) {
+				try{
+					let response = await fetch ("/BeersById?id="+id);
+					if (response.ok) {
+						let beers = await response.json()
+							console.log(beers);
+						}
+					else {
+						alert('Server response' , response.status)
+					}	
+				} catch (e) {
+					alert(e)
+				}
+	
+			}
+
+			function openPopup (event){
+				console.log(event.target.id);
+				getBeersById(event.target.id);
+				
+				overlay.style.display = 'block';
+		
+			}
+
+		getBeers();
+
+	
 
 		function closePopup (){
 			overlay.style.display = 'none';
 		}
 
-		getBeers();
+		
 
 		
 
