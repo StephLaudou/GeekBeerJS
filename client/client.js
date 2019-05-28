@@ -7,9 +7,10 @@ const getBeers = async function() {
 		let response = await fetch ("/beers");
 		if (response.ok) {
 			let beers = await response.json()
-			for (let beer of beers)
+			/*for (let beer of beers)
 				console.log(beer.name)
-				//createBeer(beer)
+				createBeer(beer)*/
+				createBeer(beers);
 			}
 		else {
 			alert('Server response' , response.status)
@@ -40,6 +41,35 @@ const getBeers = async function() {
 
 
 }*/
+const createBeer = function(beers) {
+	beers.forEach(function (beer) {
+		let list = document.querySelector(".liste")
+			//Creation de la balise Item
+			let item =  document.createElement("div");
+			item.classList.add("item");
+			list.appendChild(item);
+			//Creation de la balise Image
+			let img =  document.createElement("div");
+			img.classList.add("element");
+			img.classList.add("label");
+			img.style.backgroundImage = "url(" + beer.labels.medium + ")";
+			item.appendChild(img);
+			//Creation de la balise Name
+			let name =  document.createElement("div");
+			name.classList.add("element");
+			name.classList.add("name");
+			name.innerHTML = beer.name;
+			item.appendChild(name);
+			//Creation de la balise Ajouter
+			let add =  document.createElement("div");
+			add.classList.add("element");
+			add.innerHTML = "Bouton Ajouter";
+			item.appendChild(add);
+			
+	})
+}
+
+
 
 getBeers();
 

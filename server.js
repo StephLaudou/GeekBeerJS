@@ -13,11 +13,17 @@ MongoClient.connect(url, function(error, databases) {
 	if (error) throw error;
 	beersDb = databases.db("beers");
   
-  	//TEST
-  	beersDb.collection("data").find({"name" : "11.5° PLATO"}).toArray(function(err,result){
+		//TESTS QUERY MONGODB
+		beersDb.collection("data").find({"labels.medium":{$exists:true}}).limit(10).toArray(function(err,result){
   		console.log(result)
   		console.log(err)
   	})
+
+
+  	/*beersDb.collection("data").find({"name" : "11.5° PLATO"}).toArray(function(err,result){
+  		console.log(result)
+  		console.log(err)
+  	})*/
   	/*var cursor = beersDb.collection("data").find({"name" : "11.5° PLATO"},{"name":1}) //PROJECTION NE MARCHE PAS
   	cursor.each(function(err, doc) {
 
@@ -37,7 +43,7 @@ app.get("/", function (req,res){
 
 app.get("/beers", function (req,res){	
 	console.log("toto")
-	beersDb.collection("data").find().limit(10).toArray(function(err,result){
+	beersDb.collection("data").find({"labels.medium":{$exists:true}}).limit(10).toArray(function(err,result){
 		res.json(result)
   	})
 
