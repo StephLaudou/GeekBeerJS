@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-getBeers();
+
 
 const getBeers = async function() {
 	try{
 		let response = await fetch ("/beers");
 		if (response.ok) {
-			let beers = response.json()
+			let beers = await response.json()
 			for (let beer of beers)
 				console.log(beer.name)
 				//createBeer(beer)
@@ -21,14 +21,17 @@ const getBeers = async function() {
 }
 
 
-const createBeer = function(beer) {
+/*const createBeer = function(beer) {
 			let list = document.querySelector(".liste")
 			//Creation de la balise Item
 			let item =  document.createElement("div");
 			item.classList.add("item");
 			list.appendChild(item);
 			//Creation de la balise Image
-			
+			let img =  document.createElement("div");
+			img.classList.add("element label");
+			img.style["backgroundimage"] = "url(" + beer.label + ")";
+			item.appendChild(img);
 			//Creation de la balise label
 
 			//Creation du bouton ajouter
@@ -36,8 +39,36 @@ const createBeer = function(beer) {
 
 
 
-}
+}*/
 
+getBeers();
+
+
+
+/*
+	let popupClose = document.querySelector(".popupClose");
+	popupClose.addEventListener('click',closePopup)
+
+document.querySelectorAll(".name").forEach(function(trigger){
+	trigger.addEventListener('click',openPopup)
+})
+
+	
+	let overlay = document.querySelector(".overlay");
+	
+	function openPopup (){
+		overlay.style.display = 'block';
+	}
+
+	function closePopup (){
+		overlay.style.display = 'none';
+	}
+*/
+
+})
+
+
+//FETCH ORIGINE
 /*fetch("/beers")
 		.then(response => response.json())
 		.then(beers => {
@@ -45,7 +76,7 @@ const createBeer = function(beer) {
 				console.log(beer.name)
 		})*/
 
-/*DOC MOZILLA
+		/*DOC MOZILLA
 var myList = document.querySelector('ul');
 
 var myRequest = new Request('products.json');
@@ -78,25 +109,3 @@ ajaxGet("http://localhost/javascript-web-srv/data/films.json", function (reponse
         console.log(film.titre);
     })
 });*/
-
-
-	let popupClose = document.querySelector(".popupClose");
-	popupClose.addEventListener('click',closePopup)
-
-document.querySelectorAll(".name").forEach(function(trigger){
-	trigger.addEventListener('click',openPopup)
-})
-
-	
-	let overlay = document.querySelector(".overlay");
-	
-	function openPopup (){
-		overlay.style.display = 'block';
-	}
-
-	function closePopup (){
-		overlay.style.display = 'none';
-	}
-
-
-})
