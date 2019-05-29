@@ -6,17 +6,36 @@
 	<link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
+
 <header>
-		<h1>GeekBeer</h1>
+		<h1>GeekBeer</h1>		
 </header>
-<section class="filter">
-		<h2>Filtres</h2>
-<div></div>
+
+<section class="search">
+
+		
+		<label for="beerSearch">Beer name:</label>
+		<input type="text" id="beerSearch" name="beerSearch" >
+		
+		<label for='categorySearch'>Category</label>
+		<select name="categorySearch" id="categorySearch">
+				<option value=''>Choose...</option>
+				<option value='blonde'>BlondeBlondeBlonde</option>
+				<option value='brune'>Brune</option>
+		</select>
+
+		<input type="checkbox" id="organicSearch" name="organicSearch"
+					checked>
+		<label for="organicSearch">Is Organic</label>
+		
+		<div class="searchButton">Search</div>
 
 </section>
 
 
 <section class="liste">
+		<!--
+
 		<div class="item">
 				<div class="element label" style="background-image:url(https://brewerydb-images.s3.amazonaws.com/beer/c4f2KE/upload_jjKJ7g-medium.png)"></div>
 				<div class="element name" id="c4f2KE">Nom Biere</div>
@@ -27,7 +46,7 @@
 			<div class="element label" style="background-image:url(https://brewerydb-images.s3.amazonaws.com/beer/zfP2fK/upload_nSMNjh-medium.png)"></div>
 			<div class="element name">Nom Biere 2</div>
 			<div class="element">Bouton Ajouter</div>
-	</div>
+	</div>-->
 	
 
 </section>

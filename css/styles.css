@@ -10,6 +10,8 @@ body{
 }
 header{
   height: 50px;
+  font-size: 1.8em;
+  margin:20px;
 
 }
  h1{
@@ -17,12 +19,40 @@ header{
    text-align: center;
  }
 
- .filter{
-  height: 100px;
+ 
 
+/*////////////////////////////STYLE DE LA RECHERCHE*/
+.search{
+  height: 100px;
+  margin: 50px;
+  font-size: 1.5em;
  }
 
- /*STYLE DE LA LISTE*/
+ .search > * {
+  margin: 10px;
+  /*font-size: 1.2em*/
+}
+
+.searchButton{
+  background-color: white;
+  border-radius: 8px;
+  color:#1e2636; 
+  height: 30px;
+  width: 100px;
+  display: inline-block;
+  text-align: center
+}
+
+input, select{
+  font-size: 0.9em;
+}
+
+input[type=checkbox] {
+  height: 20px;
+  width: 20px;
+}
+
+ /*////////////////////////////STYLE DE LA LISTE*/
 .label {
   width: 100px;
   height: 100px;
@@ -42,6 +72,7 @@ header{
  .element {
    width: 300px;
    margin: auto 10px;
+   font-size: 1.1em;
    /*vertical-align: middle marche si j'utilise display inline block*/
  }
 

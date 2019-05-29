@@ -76,8 +76,12 @@ document.addEventListener("DOMContentLoaded", function() {
 				document.querySelector(".popupName").innerText = beerToDisplay[0].name;
 				document.querySelector(".popupDesc").innerText = beerToDisplay[0].description;
 				document.querySelector(".popupCreated").innerText = beerToDisplay[0].createDate;
-				document.querySelector(".popupCateg").innerText = beerToDisplay[0].style.category.name;
-				document.querySelector(".popupCountry").innerText = beerToDisplay[0].breweries[0].locations[0].countryIsoCode;
+				if (beerToDisplay[0].style && beerToDisplay[0].style.category && beerToDisplay[0].style.category.name) {
+					document.querySelector(".popupCateg").innerText = beerToDisplay[0].style.category.name;
+				}
+				if (beerToDisplay[0].breweries[0] && beerToDisplay[0].breweries[0].locations[0] && beerToDisplay[0].breweries[0].locations[0].countryIsoCode) {
+					document.querySelector(".popupCountry").innerText = beerToDisplay[0].breweries[0].locations[0].countryIsoCode;
+				}
 				document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
 				document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
 				
