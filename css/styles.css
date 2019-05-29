@@ -45,8 +45,11 @@ header{
    /*vertical-align: middle marche si j'utilise display inline block*/
  }
 
+ .name:hover {
+  font-weight: bold;
+  }
 
- /*POPUP*/
+ /*/////////////////////POPUP*/
  .overlay {
   position: fixed;
   left:0px;
@@ -79,7 +82,7 @@ header{
 .popuplabel{
   margin:0px 10px 0px 0px;
   font-weight: bold;
-  flex: 0 0 150px;
+  flex: 0 0 250px;
 }
 .popupClose{
   position : absolute;
