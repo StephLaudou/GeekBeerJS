@@ -77,9 +77,9 @@ header{
 }
 
 .popuplabel{
-  width : 150px;
   margin:0px 10px 0px 0px;
   font-weight: bold;
+  flex: 0 0 150px;
 }
 .popupClose{
   position : absolute;

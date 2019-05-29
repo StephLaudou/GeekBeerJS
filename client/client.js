@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", function() {
 				try{
 					let response = await fetch ("/BeersById?id="+id);
 					if (response.ok) {
-						let beers = await response.json()
-							console.log(beers);
+						//let beers = await response.json()
+							//console.log(beers);
+							return await response.json();
 						}
 					else {
 						alert('Server response' , response.status)
@@ -68,9 +69,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 			}
 
-			function openPopup (event){
-				console.log(event.target.id);
-				getBeersById(event.target.id);
+				async function openPopup (event){
+				//console.log(event.target.id);
+				let beerToDisplay = await getBeersById(event.target.id);
+				//console.log(beerToDisplay[0].name);
+				document.querySelector(".popupName").innerText = beerToDisplay[0].name;
+				document.querySelector(".popupDesc").innerText = beerToDisplay[0].description;
+				document.querySelector(".popupCreated").innerText = beerToDisplay[0].createDate;
+				document.querySelector(".popupCateg").innerText = beerToDisplay[0].style.category.name;
+				document.querySelector(".popupCountry").innerText = beerToDisplay[0].breweries[0].locations[0].countryIsoCode;
+				document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
+				document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
 				
 				overlay.style.display = 'block';
 		
