@@ -88,10 +88,41 @@ document.addEventListener("DOMContentLoaded", function() {
 				overlay.style.display = 'block';
 		
 			}
+			
+			
+			
+			/////////// Remplissage des options
+			const getSearchOption = async function() {
+				try{
+					let response = await fetch ("/options");
+					if (response.ok) {
+							let options = await response.json()
+							console.log(options);
+							options.forEach(function(option,index) {
+									let select = document.getElementById("categorySearch");
+									let newOption =  document.createElement("option");
+									newOption.setAttribute("value",option);
+									newOption.innerText = option;
+									select.appendChild(newOption);						
+							})
+				
+					
+					}
+					else {
+						alert('Server response' , response.status)
+					}	
+				} catch (e) {
+					alert(e)
+				}
+	
+			}
 
 		getBeers();
+		getSearchOption();
 
-	
+		
+		
+
 
 		function closePopup (){
 			overlay.style.display = 'none';
