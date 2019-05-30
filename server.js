@@ -67,6 +67,47 @@ app.get("/options", function (req,res){
 		)
 });
 
+app.get("/BeersSearch", function (req,res){	
+	console.log("BeersSearch")
+	console.log(req.query)
+	
+	var query = {};
+	if (req.query.isOrganic != "undefined"){
+		query.isOrganic = req.query.isOrganic;
+	}
+	if (req.query.name != "undefined"){
+		query.name = {$regex: req.query.name, $options: 'i'};
+	}
+	if (req.query.category != "undefined"){
+		query['style.category.name']= req.query.category;
+	}
+	
+	console.log(query);
+	/*var queryString = "{\"isOrganic\":req.query.isOrganic";
+	if (req.query.name != "undefined"){
+		queryString+= ",\"name\":{$regex: req.query.name, $options: 'i'}"
+	}
+	if (req.query.category != "undefined"){
+		queryString+= ",\"style.category.name\":req.query.category"
+	}
+	queryString += "}"
+
+	console.log(queryString)
+	queryString = {"isOrganic":req.query.isOrganic,"name":{$regex: req.query.name, $options: 'i'},"style.category.name":req.query.category}
+
+	console.log(queryString)
+	//query = {queryString}
+	//console.log(query)
+	*/
+	beersDb.collection("data").find(query).toArray(function(err,result){
+			//console.log(result);
+			res.json(result)
+	})
+
+
+});
+
+
 
 
 
@@ -88,3 +129,15 @@ var server = http.createServer(function(req, res) {
   res.end('Salut tout le monde !');
 });
 server.listen(8080);*/
+
+
+	/*if (req.query.name && req.query.category && req.query.isOrganic) {
+		db.data.find({"name":/Anniversary/,"style.category.name":"British Origin Ales","isOrganic":"N"}).pretty()
+		beersDb.collection("data").find({"name":req.query.name,"style.category.name":req.query.category,"isOrganic":req.query.isOrganic}).toArray(function(err,result){
+			beersDb.collection("data").find({"name":{$regex: req.query.name, $options: 'i'},"style.category.name":req.query.category,"isOrganic":req.query.isOrganic}).toArray(function(err,result){
+			console.log(result);
+			res.json(result)
+			})
+		}  
+	else 
+	console.log("error")*/

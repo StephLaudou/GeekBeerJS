@@ -1,22 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
 
 
-
-		const getBeers = async function() {
-			try{
-				let response = await fetch ("/beers");
-				if (response.ok) {
-					let beers = await response.json()
-						createBeer(beers);
+				////////Initialisation de la liste des bières
+				const getBeers = async function() {
+					try{
+						let response = await fetch ("/beers");
+						if (response.ok) {
+							let beers = await response.json()
+								createBeer(beers);
+							}
+						else {
+							alert('Server response' , response.status)
+						}	
+					} catch (e) {
+						alert(e)
 					}
-				else {
-					alert('Server response' , response.status)
-				}	
-			} catch (e) {
-				alert(e)
-			}
 
-		}
+				}
 
 
 			const createBeer = function(beers) {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					})
 			}
 
-
+			////////////////////////// Mise à jour des info de la popup
 			const getBeersById = async function(id) {
 				try{
 					let response = await fetch ("/BeersById?id="+id);
@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				} catch (e) {
 					alert(e)
 				}
-	
 			}
 
 				async function openPopup (event){
@@ -86,39 +85,87 @@ document.addEventListener("DOMContentLoaded", function() {
 				document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
 				
 				overlay.style.display = 'block';
-		
-			}
+				}
 			
 			
 			
-			/////////// Remplissage des options
-			const getSearchOption = async function() {
+				//////////////////////////////////// Remplissage des options
+				const getSearchOption = async function() {
+							try{
+								let response = await fetch ("/options");
+								if (response.ok) {
+									let options = await response.json()
+									console.log(options);
+									options.forEach(function(option,index) {
+											let select = document.getElementById("categorySearch");
+											let newOption =  document.createElement("option");
+											newOption.setAttribute("value",option);
+											newOption.innerText = option;
+											select.appendChild(newOption);
+									})
+							}
+							else {
+								alert('Server response' , response.status)
+							}	
+						} catch (e) {
+							alert(e)
+						}
+				}
+
+
+
+
+			////////////////////////////////////Paramétrage bouton Search
+			const getBeerSearch = async function(name,categ,organic) {
 				try{
-					let response = await fetch ("/options");
+					//await fetch ("/BeersSearch?name="+name+"&&category="+categ+"&&isOrganic="+organic)
+					//console.log("fetch search")
+					let response = await fetch ("/BeersSearch?name="+name+"&&category="+categ+"&&isOrganic="+organic);
 					if (response.ok) {
-							let options = await response.json()
-							console.log(options);
-							options.forEach(function(option,index) {
-									let select = document.getElementById("categorySearch");
-									let newOption =  document.createElement("option");
-									newOption.setAttribute("value",option);
-									newOption.innerText = option;
-									select.appendChild(newOption);						
-							})
-				
-					
-					}
+						//let beers = await response.json()
+							//console.log(beers);
+							return await response.json();
+						}
 					else {
 						alert('Server response' , response.status)
-					}	
+					}
 				} catch (e) {
 					alert(e)
 				}
-	
 			}
 
+
+
+
+			function setSearchButton() {
+				document.querySelector(".searchButton").addEventListener('click', async function(){
+					let beerSearch = document.getElementById("beerSearch").value;
+					let select = document.getElementById("categorySearch");
+					let selectedCategory= select.options[select.selectedIndex].value;
+					let isOrganic = document.getElementById("organicSearch");
+
+					if (beerSearch == "") {
+						beerSearch = "undefined"
+					}
+					if (isOrganic.checked){
+						isOrganic = "Y"
+					} else {
+						isOrganic = "undefined"
+					}
+
+					//let beerFetched = await getBeerSearch("Anniversary","British Origin Ales","N");
+					let beerFetched = await getBeerSearch(beerSearch,selectedCategory,isOrganic);
+					console.log(beerFetched);
+
+
+				})
+
+			}
+
+		/*//////////////////LANCEMENT*/
 		getBeers();
 		getSearchOption();
+		setSearchButton();
 
 		
 		
