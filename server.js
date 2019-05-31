@@ -5,7 +5,7 @@ const url = 'mongodb://localhost:27017';
 
 app.use("/css", express.static(__dirname +"/css"))
 app.use("/js", express.static(__dirname +"/client"))
-
+app.use("/images", express.static(__dirname +"/images"))
 
 //Connexion à la base de données
 let beersDb = null;
@@ -58,7 +58,7 @@ app.get("/BeersById", function (req,res){
 });
 
 app.get("/options", function (req,res){	
-	  console.log("options")
+	  //console.log("options")
 		beersDb.collection("data").distinct("style.category.name",
 				{},
 				(function(err,result) {
@@ -68,8 +68,8 @@ app.get("/options", function (req,res){
 });
 
 app.get("/BeersSearch", function (req,res){	
-	console.log("BeersSearch")
-	console.log(req.query)
+	//console.log("BeersSearch")
+	//console.log(req.query)
 	
 	var query = {};
 	if (req.query.isOrganic != "undefined"){
@@ -82,29 +82,12 @@ app.get("/BeersSearch", function (req,res){
 		query['style.category.name']= req.query.category;
 	}
 	
-	console.log(query);
-	/*var queryString = "{\"isOrganic\":req.query.isOrganic";
-	if (req.query.name != "undefined"){
-		queryString+= ",\"name\":{$regex: req.query.name, $options: 'i'}"
-	}
-	if (req.query.category != "undefined"){
-		queryString+= ",\"style.category.name\":req.query.category"
-	}
-	queryString += "}"
-
-	console.log(queryString)
-	queryString = {"isOrganic":req.query.isOrganic,"name":{$regex: req.query.name, $options: 'i'},"style.category.name":req.query.category}
-
-	console.log(queryString)
-	//query = {queryString}
-	//console.log(query)
-	*/
+	//console.log(query);
+	
 	beersDb.collection("data").find(query).toArray(function(err,result){
 			//console.log(result);
 			res.json(result)
 	})
-
-
 });
 
 
@@ -131,13 +114,5 @@ var server = http.createServer(function(req, res) {
 server.listen(8080);*/
 
 
-	/*if (req.query.name && req.query.category && req.query.isOrganic) {
-		db.data.find({"name":/Anniversary/,"style.category.name":"British Origin Ales","isOrganic":"N"}).pretty()
-		beersDb.collection("data").find({"name":req.query.name,"style.category.name":req.query.category,"isOrganic":req.query.isOrganic}).toArray(function(err,result){
-			beersDb.collection("data").find({"name":{$regex: req.query.name, $options: 'i'},"style.category.name":req.query.category,"isOrganic":req.query.isOrganic}).toArray(function(err,result){
-			console.log(result);
-			res.json(result)
-			})
-		}  
-	else 
-	console.log("error")*/
+	
+		/*db.data.find({"name":/Anniversary/,"style.category.name":"British Origin Ales","isOrganic":"N"}).pretty()*/

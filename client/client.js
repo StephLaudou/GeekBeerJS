@@ -30,7 +30,12 @@ document.addEventListener("DOMContentLoaded", function() {
 					let img =  document.createElement("div");
 					img.classList.add("element");
 					img.classList.add("label");
-					img.style.backgroundImage = "url(" + beer.labels.medium + ")";
+					if (beer.labels && beer.labels.medium) {
+						img.style.backgroundImage = "url(" + beer.labels.medium + ")";
+					} 
+					else {
+						img.style.backgroundImage = "url(images/beer-mug-icon.png)";
+					}
 					item.appendChild(img);
 					//Creation de la balise Name
 					let name =  document.createElement("div");
@@ -156,6 +161,15 @@ document.addEventListener("DOMContentLoaded", function() {
 					//let beerFetched = await getBeerSearch("Anniversary","British Origin Ales","N");
 					let beerFetched = await getBeerSearch(beerSearch,selectedCategory,isOrganic);
 					console.log(beerFetched);
+
+					//Suppression de la liste existante
+					let element = document.querySelector(".liste")
+					while (element.hasChildNodes()) {
+						element.removeChild(element.firstChild);
+				 	}
+					
+					createBeer(beerFetched);
+
 
 
 				})
