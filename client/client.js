@@ -46,13 +46,22 @@ document.addEventListener("DOMContentLoaded", function() {
 					item.appendChild(name);
 					//Creation de la balise Ajouter
 					let add =  document.createElement("div");
+					add.classList.add("add");
 					add.classList.add("element");
-					add.innerHTML = "Bouton Ajouter";
+					add.innerHTML = "+";
 					item.appendChild(add);	
 				})
 					//Ajout du trigger pour la popup
 					document.querySelectorAll(".name").forEach(function(trigger){
 					trigger.addEventListener('click',openPopup)
+					})
+
+					//Ajout du trigger pour les favoris
+					document.querySelectorAll(".add").forEach(function(trigger){
+						trigger.addEventListener('click',function(){
+							console.log("test")
+							sessionStorage.setItem("couleur","vert")
+						})
 					})
 			}
 
