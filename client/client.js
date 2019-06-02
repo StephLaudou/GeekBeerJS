@@ -18,6 +18,101 @@ document.addEventListener("DOMContentLoaded", function() {
 
 				}
 
+				function supprSelection(event){
+					if (localStorage.getItem("listSelection")) {
+						let currentJsonList = localStorage.getItem("listSelection");
+						let currentObject = JSON.parse(currentJsonList);//on transforme en objet js
+						let currentList = currentObject.liste;
+						for (var b in currentList) {
+							if (currentList[b][0].id == event.target.id) {
+								currentList.splice(b,1);
+								localStorage.setItem("listSelection", JSON.stringify(currentObject));
+								refreshSelection();
+								break;
+							}
+						}
+
+					}
+				}
+
+				function refreshSelection(){
+					//Suppression de la liste existante
+					let element = document.querySelector(".selectionPerso");
+					element.innerHTML='<h2 class="titreSel">My selection</h2>';
+					/*
+					while (element.hasChildNodes()) {
+						element.removeChild(element.firstChild);
+				 	}
+					*/
+					let currentJsonList = localStorage.getItem("listSelection");
+					let currentObject = JSON.parse(currentJsonList);//on transforme en objet js
+					let currentList = currentObject.liste;
+					for (var b in currentList) {
+						let sel = document.querySelector(".selectionPerso")
+						//Creation de la balise Item
+						let item =  document.createElement("div");
+						item.classList.add("item");
+						sel.appendChild(item);
+						//Creation de la balise Image
+						let img =  document.createElement("div");
+						img.classList.add("element");
+						img.classList.add("labelSel");
+						if (currentList[b][0].labels && currentList[b][0].labels.medium) {
+							img.style.backgroundImage = "url(" + currentList[b][0].labels.icon + ")";
+						} 
+						else {
+							img.style.backgroundImage = "url(images/beer-mug-icon.png)";
+						}
+						item.appendChild(img);
+						//Creation de la balise Name
+						let name =  document.createElement("div");
+						name.classList.add("element");
+						name.classList.add("name");
+						name.id = currentList[b][0].id;
+						name.innerHTML = currentList[b][0].name;
+						item.appendChild(name);
+						//Creation de la balise Supprimer
+						let suppr =  document.createElement("div");
+						suppr.classList.add("suppr");
+						suppr.classList.add("element");
+						suppr.id = currentList[b][0].id;
+						suppr.innerHTML = "-";
+						item.appendChild(suppr);
+						suppr.addEventListener('click', supprSelection)
+
+					}	
+
+				}
+				
+				async function selectionStorage(event){
+							if(typeof localStorage!='undefined') {
+								let beerToAdd = await getBeersById(event.target.id);
+								if (localStorage.getItem("listSelection")) {
+									let currentJsonList = localStorage.getItem("listSelection");
+									let currentObject = JSON.parse(currentJsonList);//on transforme en objet js
+									let currentList = currentObject.liste;
+									let alreadyAdded = false;
+									for (var b in currentList) {
+										if (currentList[b][0].id == beerToAdd[0].id) {
+											alreadyAdded = true;
+										}
+									}
+
+									if (!alreadyAdded && currentList.length < 6) {
+										currentList.push(beerToAdd);
+										localStorage.setItem("listSelection", JSON.stringify(currentObject));
+									}
+								} else {
+									let newObject = {
+										liste : [ beerToAdd ] 
+									};
+									localStorage.setItem("listSelection", JSON.stringify(newObject))
+								}
+								refreshSelection()
+							} else {
+								alert("localStorage n'est pas supporté");
+							}
+					}	
 
 			const createBeer = function(beers) {
 			beers.forEach(function (beer) {
@@ -48,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					let add =  document.createElement("div");
 					add.classList.add("add");
 					add.classList.add("element");
+					add.id = beer.id;
 					add.innerHTML = "+";
 					item.appendChild(add);	
 				})
@@ -58,10 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 					//Ajout du trigger pour les favoris
 					document.querySelectorAll(".add").forEach(function(trigger){
-						trigger.addEventListener('click',function(){
-							console.log("test")
-							sessionStorage.setItem("couleur","vert")
-						})
+						trigger.addEventListener('click',selectionStorage)
 					})
 			}
 
@@ -83,22 +176,22 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 
 				async function openPopup (event){
-				//console.log(event.target.id);
-				let beerToDisplay = await getBeersById(event.target.id);
-				//console.log(beerToDisplay[0].name);
-				document.querySelector(".popupName").innerText = beerToDisplay[0].name;
-				document.querySelector(".popupDesc").innerText = beerToDisplay[0].description;
-				document.querySelector(".popupCreated").innerText = beerToDisplay[0].createDate;
-				if (beerToDisplay[0].style && beerToDisplay[0].style.category && beerToDisplay[0].style.category.name) {
-					document.querySelector(".popupCateg").innerText = beerToDisplay[0].style.category.name;
-				}
-				if (beerToDisplay[0].breweries[0] && beerToDisplay[0].breweries[0].locations[0] && beerToDisplay[0].breweries[0].locations[0].countryIsoCode) {
-					document.querySelector(".popupCountry").innerText = beerToDisplay[0].breweries[0].locations[0].countryIsoCode;
-				}
-				document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
-				document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
-				
-				overlay.style.display = 'block';
+						//console.log(event.target.id);
+						let beerToDisplay = await getBeersById(event.target.id);
+						//console.log(beerToDisplay[0].name);
+						document.querySelector(".popupName").innerText = beerToDisplay[0].name;
+						document.querySelector(".popupDesc").innerText = beerToDisplay[0].description;
+						document.querySelector(".popupCreated").innerText = beerToDisplay[0].createDate;
+						if (beerToDisplay[0].style && beerToDisplay[0].style.category && beerToDisplay[0].style.category.name) {
+							document.querySelector(".popupCateg").innerText = beerToDisplay[0].style.category.name;
+						}
+						if (beerToDisplay[0].breweries[0] && beerToDisplay[0].breweries[0].locations[0] && beerToDisplay[0].breweries[0].locations[0].countryIsoCode) {
+							document.querySelector(".popupCountry").innerText = beerToDisplay[0].breweries[0].locations[0].countryIsoCode;
+						}
+						document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
+						document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
+						
+						overlay.style.display = 'block';
 				}
 			
 			
@@ -109,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
 								let response = await fetch ("/options");
 								if (response.ok) {
 									let options = await response.json()
-									console.log(options);
+									//console.log(options);
 									options.forEach(function(option,index) {
 											let select = document.getElementById("categorySearch");
 											let newOption =  document.createElement("option");
@@ -189,6 +282,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		getBeers();
 		getSearchOption();
 		setSearchButton();
+		refreshSelection();
 
 		
 		

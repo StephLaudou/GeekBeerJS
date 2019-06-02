@@ -95,7 +95,7 @@ input[type=checkbox] {
   margin-left: 60px;
 }
 
- .add {
+ .add,.suppr {
   padding:0px;
   border-radius: 15px;
   border: 2px solid #e2b266;
@@ -136,7 +136,7 @@ input[type=checkbox] {
 .popupdetail{
   margin:20px;
   display: flex;
-  
+  font-size: 1.2em;
 }
 
 .popuplabel{
