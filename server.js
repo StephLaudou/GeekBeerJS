@@ -6,6 +6,7 @@ const url = 'mongodb://localhost:27017';
 app.use("/css", express.static(__dirname +"/css"))
 app.use("/js", express.static(__dirname +"/client"))
 app.use("/images", express.static(__dirname +"/images"))
+app.use("/favicon", express.static(__dirname +"/favicon"))
 
 //Connexion à la base de données
 let beersDb = null;
