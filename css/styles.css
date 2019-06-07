@@ -44,18 +44,23 @@ header,footer {
 }
 
 .searchButton{
-  background-color: white;
-  border-radius: 8px;
+  background-color: #e2b266;
+  border-radius: 15px;
   color:#1e2636; 
   height: 30px;
   width: 200px;
   text-align: center;
   margin: auto;
   margin-top: 20px;
+  font-weight: bold;
 }
 
 input, select{
   font-size: 0.9em;
+  background-color: #e2b266;
+  border-radius: 5px;
+  border-color: #e2b266;
+  color:#1e2636; 
 }
 
 input[type=checkbox] {
@@ -131,7 +136,6 @@ input[type=checkbox] {
   box-shadow: 15px 20px 0 rgba(0, 0, 0, 0.5);
   padding: 1em;
   position: relative;
-
 } 
 
 .popupdetail{
