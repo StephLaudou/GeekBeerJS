@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
+		// We’ll add a tile layer to add to our map, in this case it’s a OSM tile layer.
+	 	// Creating a tile layer usually involves setting the URL template for the tile images
+		var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+		osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		osm = L.tileLayer(osmUrl, {
+				maxZoom: 18,
+				attribution: osmAttrib
+		});
+
+		var map = L.map('mapid');
+		var markerGroup = L.layerGroup().addTo(map);
+
 
 
 				////////Initialisation de la liste des bières
@@ -98,10 +110,13 @@ document.addEventListener("DOMContentLoaded", function() {
 										}
 									}
 
-									if (!alreadyAdded && currentList.length < 6) {
-										currentList.push(beerToAdd);
-										localStorage.setItem("listSelection", JSON.stringify(currentObject));
-									}
+										if (!alreadyAdded && currentList.length < 6) {
+											currentList.push(beerToAdd);
+											localStorage.setItem("listSelection", JSON.stringify(currentObject));
+										}
+										else (
+											alert("Sorry, You have reached the maximum number of selected beers")
+											)
 								} else {
 									let newObject = {
 										liste : [ beerToAdd ] 
@@ -163,8 +178,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				try{
 					let response = await fetch ("/BeersById?id="+id);
 					if (response.ok) {
-						//let beers = await response.json()
-							//console.log(beers);
 							return await response.json();
 						}
 					else {
@@ -176,9 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 
 				async function openPopup (event){
-						//console.log(event.target.id);
 						let beerToDisplay = await getBeersById(event.target.id);
-						//console.log(beerToDisplay[0].name);
 						document.querySelector(".popupName").innerText = beerToDisplay[0].name;
 						document.querySelector(".popupDesc").innerText = beerToDisplay[0].description;
 						document.querySelector(".popupCreated").innerText = beerToDisplay[0].createDate;
@@ -190,8 +201,17 @@ document.addEventListener("DOMContentLoaded", function() {
 						}
 						document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
 						document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
-						
+												
 						overlay.style.display = 'block';
+
+						// initialize the map on the "map" div with a given center and zoom
+						map.setView([37.090240, -95.712891], 3).addLayer(osm);
+						
+						var lat = beerToDisplay[0].breweries[0].locations[0].latitude;
+						var long = beerToDisplay[0].breweries[0].locations[0].longitude;
+						var marker = L.marker([lat,long]).addTo(map);
+						marker.addTo(markerGroup);
+
 				}
 			
 			
@@ -202,7 +222,6 @@ document.addEventListener("DOMContentLoaded", function() {
 								let response = await fetch ("/options");
 								if (response.ok) {
 									let options = await response.json()
-									//console.log(options);
 									options.forEach(function(option,index) {
 											let select = document.getElementById("categorySearch");
 											let newOption =  document.createElement("option");
@@ -225,12 +244,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			////////////////////////////////////Paramétrage bouton Search
 			const getBeerSearch = async function(name,categ,organic) {
 				try{
-					//await fetch ("/BeersSearch?name="+name+"&&category="+categ+"&&isOrganic="+organic)
-					//console.log("fetch search")
 					let response = await fetch ("/BeersSearch?name="+name+"&&category="+categ+"&&isOrganic="+organic);
 					if (response.ok) {
-						//let beers = await response.json()
-							//console.log(beers);
 							return await response.json();
 						}
 					else {
@@ -290,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		function closePopup (){
 			overlay.style.display = 'none';
+			markerGroup.clearLayers();
 		}
 
 		

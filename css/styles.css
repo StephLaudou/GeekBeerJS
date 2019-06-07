@@ -106,7 +106,8 @@ input[type=checkbox] {
 }
 
  .name:hover {
-  font-weight: bold;
+  /*font-weight: bold;*/
+  cursor: pointer;
   }
 
  /*/////////////////////POPUP*/
@@ -122,7 +123,7 @@ input[type=checkbox] {
 
  
  .popup{
-  margin:20% auto;
+  margin:100px auto;
   width: 70%;
   background-color: #e2b266;
   color:#1e2636;
@@ -150,6 +151,8 @@ input[type=checkbox] {
   font-size: 3em;
   top: 5px;
 }
+
+#mapid { height: 200px; }
 
  /*/////////////////////SELECTION*/
 .selectionPerso {
