@@ -55,6 +55,7 @@ header,footer {
   font-weight: bold;
 }
 
+
 input, select{
   font-size: 0.9em;
   background-color: #e2b266;
@@ -110,7 +111,7 @@ input[type=checkbox] {
   padding-bottom: 5px; /*pour centrer verticalement*/
 }
 
- .name:hover {
+ .name:hover, .searchButton:hover{
   /*font-weight: bold;*/
   cursor: pointer;
   }
