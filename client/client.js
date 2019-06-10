@@ -51,11 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
 					//Suppression de la liste existante
 					let element = document.querySelector(".selectionPerso");
 					element.innerHTML='<h2 class="titreSel">My selection</h2>';
-					/*
-					while (element.hasChildNodes()) {
-						element.removeChild(element.firstChild);
-				 	}
-					*/
 					let currentJsonList = localStorage.getItem("listSelection");
 					let currentObject = JSON.parse(currentJsonList);//on transforme en objet js
 					let currentList = currentObject.liste;
@@ -145,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
 											dx = (bbox.x) - leftMargin;
 											// Append the clonedelement											
 											document.body.appendChild(cln); 
-											cln.addEventListener("transitionend", function() {cln.parentNode.removeChild(cln);}); 
+											cln.addEventListener("transitionend", function() {if (cln && cln.parentNode) { cln.parentNode.removeChild(cln); }}); 
 
 											setTimeout(function() { 
 												cln.className += " selAnim";
@@ -344,69 +339,15 @@ document.addEventListener("DOMContentLoaded", function() {
 		setSearchButton();
 		refreshSelection();
 
-		
-		
-
-
 		function closePopup (){
 			overlay.style.display = 'none';
 			markerGroup.clearLayers();
 		}
 
 		
-
-		
-
-
-
 		let popupClose = document.querySelector(".popupClose");
 		popupClose.addEventListener('click',closePopup)		
 		let overlay = document.querySelector(".overlay");
 			
-			
-
 
 })
-
-
-//FETCH ORIGINE
-/*fetch("/beers")
-		.then(response => response.json())
-		.then(beers => {
-			for (let beer of beers)
-				console.log(beer.name)
-		})*/
-
-		/*DOC MOZILLA
-var myList = document.querySelector('ul');
-
-var myRequest = new Request('products.json');
-
-fetch(myRequest)
-  .then(function(response) { return response.json(); })
-  .then(function(data) {
-    for (var i = 0; i < data.products.length; i++) {
-      var listItem = document.createElement('li');
-      listItem.innerHTML = '<strong>' + data.products[i].Name + '</strong> can be found in ' +
-                           data.products[i].Location +
-                           '. Cost: <strong>£' + data.products[i].Price + '</strong>';
-      myList.appendChild(listItem);
-    }
-	});*/
-	
-/*GRAFIKART
-7:45
-try if resposne.ok else console response.status
-catch (e)
-
-*/
-
-/* OCR
-ajaxGet("http://localhost/javascript-web-srv/data/films.json", function (reponse) {
-    // Transforme la réponse en tableau d'objets JavaScript
-    var films = JSON.parse(reponse);
-    // Affiche le titre de chaque film
-    films.forEach(function (film) {
-        console.log(film.titre);
-    })
-});*/
