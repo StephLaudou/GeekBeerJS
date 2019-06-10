@@ -83,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						name.id = currentList[b][0].id;
 						name.innerHTML = currentList[b][0].name;
 						item.appendChild(name);
+						name.addEventListener('click',openPopup)
 						//Creation de la balise Supprimer
 						let suppr =  document.createElement("div");
 						suppr.classList.add("suppr");
@@ -95,6 +96,24 @@ document.addEventListener("DOMContentLoaded", function() {
 					}	
 
 				}
+				
+				var getSiblings = function (elem) {
+
+					// Setup siblings array and get the first sibling
+					var siblings = [];
+					var sibling = elem.parentNode.firstChild;
+				
+					// Loop through each sibling and push to the array
+					while (sibling) {
+						if (sibling.nodeType === 1 && sibling !== elem) {
+							siblings.push(sibling);
+						}
+						sibling = sibling.nextSibling
+					}
+				
+					return siblings;
+				
+				};
 				
 				async function selectionStorage(event){
 							if(typeof localStorage!='undefined') {
@@ -111,12 +130,36 @@ document.addEventListener("DOMContentLoaded", function() {
 									}
 
 										if (!alreadyAdded && currentList.length < 6) {
+											//animation
+											let firstSibl = getSiblings(event.srcElement)[0];
+											// Copy the <li> element and its child nodes
+											var cln = firstSibl.cloneNode(true);
+											cln.style.position = "fixed";
+											let leftMargin = 50
+											let imgheight = 100
+											cln.style.left = leftMargin + "px";
+											cln.style.top = (event.y - (imgheight/2)) + "px"; // centrage
+											
+											let bbox = document.getElementsByClassName("titreSel")[0].getBoundingClientRect();
+											dy = (bbox.y + imgheight/2) - event.y
+											dx = (bbox.x) - leftMargin;
+											// Append the clonedelement											
+											document.body.appendChild(cln); 
+											cln.addEventListener("transitionend", function() {cln.parentNode.removeChild(cln);}); 
+
+											setTimeout(function() { 
+												cln.className += " selAnim";
+												cln.style.transform = "translate(" + dx + "px," + dy +"px)";
+											 }, 50)
+
+
+											//fin animation
 											currentList.push(beerToAdd);
 											localStorage.setItem("listSelection", JSON.stringify(currentObject));
 										}
-										else (
+										else if (currentList.length >= 6) {
 											alert("Sorry, You have reached the maximum number of selected beers")
-											)
+											}
 								} else {
 									let newObject = {
 										liste : [ beerToAdd ] 
@@ -187,6 +230,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					alert(e)
 				}
 			}
+		
 
 				async function openPopup (event){
 						let beerToDisplay = await getBeersById(event.target.id);
@@ -201,7 +245,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						}
 						document.querySelector(".popupIBU").innerText = beerToDisplay[0].ibu;
 						document.querySelector(".popupABV").innerText = beerToDisplay[0].abv;
-												
+						
+						
 						overlay.style.display = 'block';
 
 						// initialize the map on the "map" div with a given center and zoom
@@ -277,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 					//let beerFetched = await getBeerSearch("Anniversary","British Origin Ales","N");
 					let beerFetched = await getBeerSearch(beerSearch,selectedCategory,isOrganic);
-					console.log(beerFetched);
+					//console.log(beerFetched);
 
 					//Suppression de la liste existante
 					let element = document.querySelector(".liste")

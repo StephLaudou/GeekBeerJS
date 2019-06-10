@@ -79,7 +79,14 @@ input[type=checkbox] {
   height: 100px;
   background-size: contain;
   background-repeat: no-repeat;
+ }
 
+ .labelAdd {
+  transform: translate(100px);
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
  }
 
  .item {
@@ -114,6 +121,12 @@ input[type=checkbox] {
  .name:hover, .searchButton:hover{
   /*font-weight: bold;*/
   cursor: pointer;
+  }
+
+  .selAnim {
+    transition: all 0.5s ease;
+    transform: scale(0.5);
+    opacity: 0.1;
   }
 
  /*/////////////////////POPUP*/
