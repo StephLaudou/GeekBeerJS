@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
 									for (var b in currentList) {
 										if (currentList[b][0].id == beerToAdd[0].id) {
 											alreadyAdded = true;
+											alert("This beer is already in the list...");
 										}
 									}
 
